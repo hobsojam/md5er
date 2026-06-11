@@ -6,7 +6,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>md5er.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="md5er.ico"/>
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="md5er.Tests\**" />
