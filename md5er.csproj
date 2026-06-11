@@ -8,6 +8,12 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>md5er.ico</ApplicationIcon>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Company>James Hobson</Company>
+    <Product>md5er</Product>
+    <Copyright>Copyright © 2026 James Hobson</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
