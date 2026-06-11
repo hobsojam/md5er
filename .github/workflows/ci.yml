@@ -17,6 +17,7 @@ jobs:
           dotnet-version: '10.0.x'
 
       - run: dotnet restore
+      - run: dotnet list package --vulnerable --include-transitive
       - run: dotnet build --no-restore --configuration Release
       - run: dotnet test --no-build --configuration Release
 
