@@ -34,6 +34,7 @@ Test project (`md5er.Tests`) covers the Model and ViewModel layers with xUnit. T
 - TDD: write tests first, then implementation
 - Tests live in `md5er.Tests` (xUnit)
 - Third-party packages allowed in the test project; **app project uses only built-in .NET packages**
+- **Before starting any feature branch:** sync main first — `git checkout main && git pull`, then branch from there. Without this, branches diverge silently and accumulate merge conflicts.
 
 ## Security
 
