@@ -19,6 +19,17 @@ jobs:
 
       - run: dotnet publish md5er.csproj --self-contained -p:PublishSingleFile=true -r win-x64 -c Release -o publish
 
-      - run: gh release create ${{ github.ref_name }} publish/md5er.exe --title ${{ github.ref_name }} --generate-notes
+      - name: Compute SHA-256
+        run: |
+          $hash = (Get-FileHash publish/md5er.exe -Algorithm SHA256).Hash.ToLower()
+          "SHA256=$hash" >> $env:GITHUB_ENV
+
+      - name: Create release
+        run: |
+          $notes = "## Verification`n`nVerify your download against the SHA-256 checksum:`n`n``````text`n${{ env.SHA256 }}  md5er.exe`n``````"
+          gh release create ${{ github.ref_name }} publish/md5er.exe `
+            --title ${{ github.ref_name }} `
+            --generate-notes `
+            --notes-prepend "$notes"
         env:
           GH_TOKEN: ${{ github.token }}
