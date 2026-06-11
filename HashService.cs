@@ -5,7 +5,7 @@ namespace md5er;
 
 public record HashResult(string MD5, string SHA1, string SHA256, string SHA512);
 
-public class HashService
+public static class HashService
 {
     public static HashResult Compute(Stream stream)
     {
