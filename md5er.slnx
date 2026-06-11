@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="md5er.csproj" />
+  <Project Path="md5er.Tests/md5er.Tests.csproj" />
+</Solution>
