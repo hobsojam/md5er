@@ -10,7 +10,8 @@ public class FileValidatorTests
         var path = Path.GetTempFileName();
         try
         {
-            FileValidator.EnsureHashable(path);
+            var ex = Record.Exception(() => FileValidator.EnsureHashable(path));
+            Assert.Null(ex);
         }
         finally
         {
