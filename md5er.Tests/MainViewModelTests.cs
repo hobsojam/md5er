@@ -25,14 +25,22 @@ public class MainViewModelTests
     }
 
     [Fact]
-    public async Task HashFileAsync_ValidFile_IsNotBusyWhenComplete()
+    public async Task HashFileAsync_ValidFile_IsBusyDuringThenFalseOnCompletion()
     {
         var path = Path.GetTempFileName();
         try
         {
             var vm = new MainViewModel();
+            var busyStates = new List<bool>();
+            vm.PropertyChanged += (_, e) =>
+            {
+                if (e.PropertyName == nameof(MainViewModel.IsBusy))
+                    busyStates.Add(vm.IsBusy);
+            };
+
             await vm.HashFileAsync(path);
 
+            Assert.Contains(true, busyStates);
             Assert.False(vm.IsBusy);
         }
         finally
