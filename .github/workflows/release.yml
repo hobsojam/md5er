@@ -1,0 +1,24 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - run: dotnet publish --self-contained -p:PublishSingleFile=true -r win-x64 -c Release -o publish
+
+      - run: gh release create ${{ github.ref_name }} publish/md5er.exe --title ${{ github.ref_name }} --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}

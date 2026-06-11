@@ -19,3 +19,21 @@ jobs:
       - run: dotnet restore
       - run: dotnet build --no-restore --configuration Release
       - run: dotnet test --no-build --configuration Release
+
+  publish:
+    needs: build-and-test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - run: dotnet publish --self-contained -p:PublishSingleFile=true -r win-x64 -c Release -o publish
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: md5er
+          path: publish/md5er.exe
