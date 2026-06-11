@@ -14,6 +14,8 @@ jobs:
         with:
           fetch-depth: 0
 
+      # SonarScanner is a Java application regardless of the language being analysed.
+      # The dotnet-sonarscanner tool is a thin wrapper around the Java scanner engine.
       - uses: actions/setup-java@v4
         with:
           java-version: '21'
