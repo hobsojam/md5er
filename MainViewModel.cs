@@ -6,8 +6,6 @@ namespace md5er;
 
 public class MainViewModel : INotifyPropertyChanged
 {
-    private readonly HashService _hashService = new();
-
     private string? _fileName;
     private string? _md5;
     private string? _sha1;
@@ -42,7 +40,7 @@ public class MainViewModel : INotifyPropertyChanged
             var result = await Task.Run(() =>
             {
                 using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
-                return _hashService.Compute(stream);
+                return HashService.Compute(stream);
             });
 
             MD5    = result.MD5;

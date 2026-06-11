@@ -7,7 +7,7 @@ public record HashResult(string MD5, string SHA1, string SHA256, string SHA512);
 
 public class HashService
 {
-    public HashResult Compute(Stream stream)
+    public static HashResult Compute(Stream stream)
     {
         using var md5    = IncrementalHash.CreateHash(HashAlgorithmName.MD5);
         using var sha1   = IncrementalHash.CreateHash(HashAlgorithmName.SHA1);
