@@ -26,7 +26,11 @@ dotnet publish --self-contained -p:PublishSingleFile=true
 
 ## Usage
 
-Run `md5er.exe` and drag any file onto the window. Hashes are displayed immediately and can be copied to the clipboard.
+Run `md5er.exe` and drag any file onto the window. Hashes are displayed immediately and can be copied to the clipboard. Minimise to the system tray; double-click the tray icon to restore.
+
+## Verifying a download
+
+Each [GitHub Release](https://github.com/hobsojam/md5er/releases) includes a SHA-256 checksum for the published `md5er.exe`. After downloading, verify the hash matches before running.
 
 ## Requirements (to build)
 
