@@ -71,7 +71,7 @@ jobs:
 
       - run: dotnet publish md5er.csproj --self-contained -p:PublishSingleFile=true -r win-x64 -c Release -o publish
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: md5er
           path: publish/md5er.exe
