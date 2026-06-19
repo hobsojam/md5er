@@ -18,8 +18,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      # SonarScanner is a Java application regardless of the language being analysed.
-      # The dotnet-sonarscanner tool is a thin wrapper around the Java scanner engine.
       - uses: actions/setup-java@v4
         with:
           java-version: '21'
@@ -30,12 +28,14 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Install SonarScanner
+        if: github.actor != 'dependabot[bot]'
         run: dotnet tool install --global dotnet-sonarscanner
 
       - run: dotnet restore
       - run: dotnet list package --vulnerable --include-transitive
 
       - name: SonarCloud begin
+        if: github.actor != 'dependabot[bot]'
         run: >
           dotnet sonarscanner begin
           /k:"hobsojam_md5er"
@@ -51,6 +51,7 @@ jobs:
       - run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
 
       - name: SonarCloud end
+        if: github.actor != 'dependabot[bot]'
         run: dotnet sonarscanner end /d:sonar.token="$env:SONAR_TOKEN"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -71,7 +72,7 @@ jobs:
 
       - run: dotnet publish md5er.csproj --self-contained -p:PublishSingleFile=true -r win-x64 -c Release -o publish
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: md5er
           path: publish/md5er.exe
