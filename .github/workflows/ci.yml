@@ -14,51 +14,21 @@ jobs:
     runs-on: windows-latest
     permissions:
       contents: read
-      pull-requests: read
-      statuses: write
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-java@v5.7.0
-        with:
-          java-version: '21'
-          distribution: temurin
-
       - uses: actions/setup-dotnet@v6.0.0
         with:
           dotnet-version: '10.0.x'
 
-      - name: Install SonarScanner
-        if: github.actor != 'dependabot[bot]'
-        run: dotnet tool install --global dotnet-sonarscanner
-
       - run: dotnet restore
       - run: dotnet list package --vulnerable --include-transitive
-
-      - name: SonarCloud begin
-        if: github.actor != 'dependabot[bot]'
-        run: >
-          dotnet sonarscanner begin
-          /k:"hobsojam_md5er"
-          /o:"hobsojam"
-          /d:sonar.token="$env:SONAR_TOKEN"
-          /d:sonar.host.url="https://sonarcloud.io"
-          /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml"
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - run: dotnet build --no-restore --configuration Release
 
       - run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
-
-      - name: SonarCloud end
-        if: github.actor != 'dependabot[bot]'
-        run: dotnet sonarscanner end /d:sonar.token="$env:SONAR_TOKEN"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   publish:
     needs: build-and-test
